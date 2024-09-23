@@ -1,30 +1,55 @@
-<script lang="ts" setup>
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-    <header>
-        <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="150" height="150" />
-
-        <div class="wrapper">
-            <HelloWorld />
-        </div>
-    </header>
+    <ThemeSwitcher />
+    <div class="card flex justify-center">
+        <MultiSelect v-model="selectedCities" :options="groupedCities" optionLabel="label" filter
+            optionGroupLabel="label" optionGroupChildren="items" display="chip" placeholder="Select Cities"
+            class="w-full md:w-80">
+            <template #optiongroup="slotProps">
+                <div class="flex items-center">
+                    <img :alt="slotProps.option.label"
+                        src="https://primefaces.org/cdn/primevue/images/flag/flag_placeholder.png"
+                        :class="`flag flag-${slotProps.option.code.toLowerCase()} mr-2`" style="width: 18px" />
+                    <div>{{ slotProps.option.label }}</div>
+                </div>
+            </template>
+        </MultiSelect>
+    </div>
 </template>
 
-<style scoped>
-body #app header {
-    margin: 0;
-    padding: 0;
-}
-header {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.wrapper {
-    padding-left: 30px;
-}
-</style>
+<script setup>
+import { ref } from "vue";
+
+const selectedCities = ref();
+const groupedCities = ref([
+    {
+        label: 'Germany',
+        code: 'DE',
+        items: [
+            { label: 'Berlin', value: 'Berlin' },
+            { label: 'Frankfurt', value: 'Frankfurt' },
+            { label: 'Hamburg', value: 'Hamburg' },
+            { label: 'Munich', value: 'Munich' }
+        ]
+    },
+    {
+        label: 'USA',
+        code: 'US',
+        items: [
+            { label: 'Chicago', value: 'Chicago' },
+            { label: 'Los Angeles', value: 'Los Angeles' },
+            { label: 'New York', value: 'New York' },
+            { label: 'San Francisco', value: 'San Francisco' }
+        ]
+    },
+    {
+        label: 'Japan',
+        code: 'JP',
+        items: [
+            { label: 'Kyoto', value: 'Kyoto' },
+            { label: 'Osaka', value: 'Osaka' },
+            { label: 'Tokyo', value: 'Tokyo' },
+            { label: 'Yokohama', value: 'Yokohama' }
+        ]
+    }
+]);
+</script>
